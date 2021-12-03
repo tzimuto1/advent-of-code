@@ -1,7 +1,6 @@
 package main
 
 import (
-    "bufio"
     "fmt"
     "log"
     "os"
@@ -9,19 +8,15 @@ import (
 )
 
 func getDepths() []int {
-    // read the ints
-    file, err := os.Open("input");
+    fileLines, err := GetFileLines("resources/day1.txt")
     if err != nil {
         log.Fatal(err)
+        os.Exit(2)
     }
-    defer file.Close()
-
-    scanner := bufio.NewScanner(file)
 
     var depthVals []int
-    for scanner.Scan() {
-        depthStr := scanner.Text()
-        depth, err := strconv.Atoi(depthStr)
+    for _, line := range fileLines {
+        depth, err := strconv.Atoi(line)
 
         if err != nil {
             fmt.Println(err)
@@ -32,16 +27,16 @@ func getDepths() []int {
 
     }
 
-    if err := scanner.Err(); err != nil {
-        log.Fatal(err)
-        os.Exit(2)
-    }
-
     return depthVals
 }
 
 func part1() {
-    depthVals := getDepths()
+    depthVals, err := GetIntsFromFile("resources/day1.txt")
+
+    if err != nil {
+        fmt.Println(err)
+        os.Exit(2)
+    }
 
     // count number of times depth increases
     numTimesDepthIncrease := 0
@@ -59,7 +54,12 @@ func part1() {
 }
 
 func part2() {
-    depths := getDepths()
+    depths, err := GetIntsFromFile("resources/day1.txt")
+
+    if err != nil {
+        fmt.Println(err)
+        os.Exit(2)
+    }
 
     numTimesDepthSumIncrease := 0
     prevDepthSum := depths[0] + depths[1] + depths[2]
@@ -75,6 +75,6 @@ func part2() {
 }
 
 func main() {
-    // part1()
+    part1()
     part2()
 }
