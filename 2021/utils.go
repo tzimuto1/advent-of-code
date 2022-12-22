@@ -3,6 +3,7 @@ package main
 import (
     "bufio"
     "fmt"
+    "math"
     "os"
     "strconv"
 )
@@ -54,4 +55,12 @@ func ExitOnError(err error) {
         fmt.Println(err)
         os.Exit(2)
     }
+}
+
+func Min(a int, b int) int {
+    return int(math.Min(float64(a), float64(b)))
+}
+
+func Max(a int, b int) int {
+    return int(math.Max(float64(a), float64(b)))
 }
